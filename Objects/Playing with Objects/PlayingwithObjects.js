@@ -42,3 +42,9 @@ var users = [{
         text += name + " - " +age + "\n";
     }
 console.log(text)
+
+//or
+
+for (var i = 0; i < users.length; i++){
+    console.log(users[i].name, "-", users[i].age);
+}
