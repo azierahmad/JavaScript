@@ -8,11 +8,12 @@
     <style type="text/css">
         body {
             background-color: black;
+            margin: 0;
+            /* text-align: center; */
         }
         div.row div{
-            width: 50px;
-            height: 50px;
-            border: 1px solid black;
+            width: 40px;
+            height: 40px;
             display: inline-block;
         }
         div.brick{
@@ -23,107 +24,82 @@
             background-repeat: no-repeat;
             background-position: center;
         }
-        div.pacman{
+        div#pacman{
             background: url('pacman.gif');
             background-repeat: no-repeat;
             background-position: center;
+            background-size: contain;
+            width: 30px;
+            height: 30px;
+            position: absolute;
         }
+        
     </style>
 </head>
 <body>
-    <div class="row">
-        <div class="brick"></div>
-        <div class="brick"></div>
-        <div class="brick"></div>
-        <div class="brick"></div>
-        <div class="brick"></div>
-        <div class="brick"></div>
-        <div class="brick"></div>
-        <div class="brick"></div>
-        <div class="brick"></div>
-        <div class="brick"></div>
+    <div id="container">
+        <div id="world"></div>
+        <div id="pacman" ></div>
     </div>
-    <div class="row">
-        <div class="brick"></div>
-        <div class="coin"></div>
-        <div class="coin"></div>
-        <div class="pacman"></div>
-        <div class="coin"></div>
-        <div class="coin"></div>
-        <div class="coin"></div>
-        <div class="empty"></div>
-        <div class="coin"></div>
-        <div class="brick"></div>
-    </div>
-    <div class="row">
-        <div class="brick"></div>
-        <div class="coin"></div>
-        <div class="coin"></div>
-        <div class="coin"></div>
-        <div class="coin"></div>
-        <div class="empty"></div>
-        <div class="empty"></div>
-        <div class="coin"></div>
-        <div class="coin"></div>
-        <div class="brick"></div>
-    </div>
-    <div class="row">
-        <div class="brick"></div>
-        <div class="coin"></div>
-        <div class="coin"></div>
-        <div class="coin"></div>
-        <div class="coin"></div>
-        <div class="coin"></div>
-        <div class="coin"></div>
-        <div class="coin"></div>
-        <div class="coin"></div>
-        <div class="brick"></div>
-    </div>
-    <div class="row">
-        <div class="brick"></div>
-        <div class="brick"></div>
-        <div class="brick"></div>
-        <div class="brick"></div>
-        <div class="brick"></div>
-        <div class="brick"></div>
-        <div class="brick"></div>
-        <div class="brick"></div>
-        <div class="brick"></div>
-        <div class="brick"></div>
-    </div>
-
     <script>
         var world = [
             [2,2,2,2,2,2,2,2,2,2],
-            [1,1,1,1,1,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,1,1],
-            [2,2,2,2,2,2,2,2,2,2],
-        ]
+            [2,1,1,1,1,1,1,1,1,2],
+            [2,1,2,1,1,1,1,1,1,2],
+            [2,1,2,1,1,1,1,1,1,2],
+            [2,1,2,2,2,2,1,1,1,2],
+            [2,1,1,1,1,2,1,1,1,2],
+            [2,1,1,1,1,2,1,1,1,2],
+            [2,1,1,1,1,1,1,1,1,2],
+            [2,2,2,2,2,2,2,2,2,2]
+        ];
 
+        var pacman = {
+            x: 1,
+            y: 1,
+        }
         function displayWorld(){
             var output = '';
             for(var i=0; i<world.length; i++){
-                output += "\n<div class='row'>";
+                output += "\n<div class='row'>\n";
                 for(var j=0; j<world[i].length; j++){
-                    if(world[i][j] == 2){
-                        output += "\n\t<div class='birck'></div>"
-                    }
-                    else if(world[i][j] == 1){
-                        output += "\n\t<div class='coin'></div>"
-                    }
-                    if(world[i][j] == 0){
-                        output += "\n\t<div class='empty'></div>"
-                    }
+                    if(world[i][j] == 2)
+                        output += "<div class='brick'></div>";
+                    else if(world[i][j] == 1)
+                        output += "<div class='coin'></div>";
+                    if(world[i][j] == 0)
+                        output += "<div class='empty'></div>";
                 }
                 output += "\n</div>"
             }
-            console.log(output)
+            //console.log(output)
+            document.getElementById('world').innerHTML = output;
         }
+
+        function displayPacman(){
+            document.getElementById('pacman').style.top = pacman.y+"px"
+            document.getElementById('pacman').style.left = pacman.x+"px"
+        }
+        displayWorld();
+        displayPacman();
+        document.onkeydown = function(e) {
+            if(e.keyCode == 37){
+                pacman.x -= 60;
+            }
+            else if(e.keyCode == 39){
+                pacman.x += 60;
+            }
+            else if(e.keyCode == 38){
+                pacman.y -= 60;
+            }
+            else if(e.keyCode == 40){
+                pacman.y += 60;
+            }
+            //console.log(e.keyCode);
+            displayPacman();
+        }
+
+
     </script>
 </body>
 </html>
